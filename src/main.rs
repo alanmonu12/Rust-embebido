@@ -7,13 +7,14 @@ extern crate cortex_m_rt;
 extern crate cortex_m;
 extern crate stm32l4;
 
-use cortex_m::asm;
+use cortex_m_semihosting::hprintln;
 use cortex_m_rt::entry;
+use stm32l4::stm32l4x6;
 
 #[entry]
 fn main() -> ! {
-    asm::nop(); // To not have main optimize to abort in release mode, remove when you add code
-
+    let peripherals = stm32l4x6::Peripherals::take().unwrap();
+    hprintln!("Perifericos creados").unwrap();
     loop {
         // your code goes here
     }
