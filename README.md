@@ -13,7 +13,7 @@ El hardware que se utiliza para realizar es una tarjeta de desarrollo NUCLEO-STM
 * 1 MB de Flash que empieza en la dirección 0x0800_0000 (Dividida en dos bancos de memoria)
 * 128 KiB de SRAM que empieza en la dirección 0x2000_0000 (Dividida en dos bancos de memoria)
 
-![enter image description here](https://media.digikey.com/Photos/STMicro%20Photos/NUCLEO-L476RG.JPG)
+![Tarjeta de desarrollo](https://media.digikey.com/Photos/STMicro%20Photos/NUCLEO-L476RG.JPG)
 
 ## Instalación de Rust
 
@@ -369,6 +369,8 @@ En otra terminal diferente ejecutamos lo siguiente.
 > cargo run target/thumbv7em-none-eabihf/release/led-blink-stm32l4-PAC
 ~~~
 Ese comando se conectara con la sesión de openocd, cargará el archivo *target/thumbv7em-none-eabihf/release/led-blink-stm32l4-PAC* al microcontrolador e iniciara un interfaz gráfica sencilla donde podremos seguir el flujo del programa.
+
+![Sesion de GDB](https://i.ibb.co/TRKfbkb/Screenshot-from-2020-05-02-18-16-53.png)
 
 Para continuar con la ejecución del programa escribimos en la sesión de GDB el comando continue.
 
