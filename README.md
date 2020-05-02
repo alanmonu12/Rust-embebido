@@ -4,7 +4,7 @@ Este proyecto debe servir como material de consulta para la creación de proyect
 
 Posteriormente se harán más ejemplos con distintos periféricos y se tratará que sean lo más explicativos posibles.
 
-- [Hardware de prueba](##Hardware%20de%20prueba)
+- [Hardware de prueba](#Hardware%20de%20prueba)
 - [Instalación de Rust](##Instalación%201%20de%201%20Rust)
 
 ## Hardware de prueba
