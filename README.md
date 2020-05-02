@@ -12,7 +12,7 @@ Posteriormente se harán más ejemplos con distintos periféricos y se tratará 
 	- [Linker script](#linker-script)
 	- [Dependencias](#dependencias)
 	- [Perfil para compilar el proyecto](#perfil-para-compilar-el-proyecto)
-- [Programa](#programa)
+- [Aplicación](#aplicación)
 	- [Código](#codigo)
 	- [Compilar el proyecto](#compilar-el-proyecto)
 	- [Debugging](#debugging)
@@ -235,7 +235,7 @@ warning: crate `led_blink_stm32l4_PAC` should have a snake case name
     Finished release [optimized + debuginfo] target(s) in 1m 18s
 ~~~
 
-## Programa 
+## Aplicación 
 
 Una vez teniendo el proyecto configurado para poder compilar para al arquitectura de nuestro microcontrolador solo nos queda escribir la aplicación que queramos realizar.
 
