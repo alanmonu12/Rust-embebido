@@ -4,8 +4,20 @@ Este proyecto debe servir como material de consulta para la creación de proyect
 
 Posteriormente se harán más ejemplos con distintos periféricos y se tratará que sean lo más explicativos posibles.
 
-- [Hardware de prueba](Hardware%20de%20prueba)
-- [Instalación de Rust](Instalación%201%20de%201%20Rust)
+- [Hardware de prueba](#hardware-de-prueba)
+- [Instalación de Rust](#instalación-de-rust)
+- [Preparación del proyecto](#preparación-del-proyecto)
+	- [Configuración global](#configuración-global)
+	- [Linker script](#linker-script)
+	- [Dependencias](#dependencias)
+	- [Perfil para compilar el proyecto](#perfil-para-compilar-el-proyecto)
+- [Programa](#programa)
+	- [Código](#codigo)
+	- [Compilar el proyecto](#compilar-el-proyecto)
+	- [Debugging](#debugging)
+	- [Openocd](#openocd)
+	- [arm-none-gdb](#arm-none-gdb)
+- [License](#license)
 
 ## Hardware de prueba
 
@@ -53,9 +65,9 @@ $ rustup target add thumbv7em-none-eabihf
 
 Para trabajar con Rust en sistemas embebidos es necesario preparar el proyectos con cierta configuración especifica para el hardware que vamos a usar. Lo primero que debemos hacer es agregar un archivo de configuración, este nos servirá para indicarle a Cargo (Cargo es el manejador de paquetes de Rust) información importante de nuestro proyecto, como puede ser la arquitectura del procesador.
 
-## Configuración global
+### Configuración global
 
-Primero debemos crear un carpeta dentro de la raíz nuestro proyecto llamada ~~~ .cargo ~~~, esta carpeta funciona como "home" para Cargo, ahí se guardan distintos archivos que Cargo utilizará.
+Primero debemos crear un carpeta dentro de la raíz nuestro proyecto llamada **.cargo**, esta carpeta funciona como "home" para Cargo, ahí se guardan distintos archivos que Cargo utilizará.
 
 ~~~ j
 $ mkdir .cargo
