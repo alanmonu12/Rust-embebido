@@ -4,6 +4,9 @@ Este proyecto debe servir como material de consulta para la creación de proyect
 
 Posteriormente se harán más ejemplos con distintos periféricos y se tratará que sean lo más explicativos posibles.
 
+- [Hardware de prueba](##Hardware%201%20de%201%20prueba)
+- [Instalación de Rust](##Instalación%201%20de%201%20Rust)
+
 ## Hardware de prueba
 
 El hardware que se utiliza para realizar es una tarjeta de desarrollo NUCLEO-STM32L476, la cual cuneta con un microcontrolador STM32L476RG con las siguientes características:
@@ -379,3 +382,6 @@ Para continuar con la ejecución del programa escribimos en la sesión de GDB el
 ~~~
 
 Con esto el LED de la placa comenzará a parpadear.
+
+## License
+MIT
