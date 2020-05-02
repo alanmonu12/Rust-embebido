@@ -1,3 +1,8 @@
 [build]
 # Instruction set of Cortex-M4F (used in NUCLEO-STM32L476)
 target = "thumbv7em-none-eabihf"
+
+rustflags = [
+  # use the Tlink.x scrip from the cortex-m-rt crate
+  "-C", "link-arg=-Tlink.x",
+]
