@@ -7,6 +7,7 @@ Posteriormente se harán más ejemplos con distintos periféricos y se tratará 
 - [Hardware de prueba](#hardware-de-prueba)
 - [Instalación de Rust](#instalación-de-rust)
 - [Preparación del proyecto](#preparación-del-proyecto)
+	- [Crear un proyecto en Rust](#crear-un-proyecto-en-rust)
 	- [Configuración global](#configuración-global)
 	- [Linker script](#linker-script)
 	- [Dependencias](#dependencias)
@@ -64,6 +65,23 @@ $ rustup target add thumbv7em-none-eabihf
 ## Preparación del proyecto
 
 Para trabajar con Rust en sistemas embebidos es necesario preparar el proyectos con cierta configuración especifica para el hardware que vamos a usar. Lo primero que debemos hacer es agregar un archivo de configuración, este nos servirá para indicarle a Cargo (Cargo es el manejador de paquetes de Rust) información importante de nuestro proyecto, como puede ser la arquitectura del procesador.
+
+### Crear un proyecto en Rust
+
+Junto con la intalación de Rust, tendremos instalado Cargo que es el manejador de paquetes de Rust. Con ayuda de Cargo podemos generar protectos nuevos de rust. Para crear un proyecto debemos ejecutar el siguiente comando.
+
+~~~ C
+$ cargo new <project_name>
+~~~
+
+Este comando generá una caperta con todos los archivos necesarios para un proyecto de Rust.
+
+~~~ C
+new-project
+├── Cargo.toml
+└── src
+    └── main.rs
+~~~
 
 ### Configuración global
 
