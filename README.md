@@ -13,10 +13,33 @@ El hardware que se utliza para realizar es una tarjeta de desarrollo NUCLEO-STM3
 
 ## Instalación de Rust
 
-La mejor manera para instalar Rust es la descrita en su página oficial [https://rustup.rs](https://rustup.rs). Para comprobar que tenemos instalado Rust ejecutamos el siguiente comando.
+La mejor manera para instalar Rust es la descrita en su página oficial [https://rustup.rs](https://rustup.rs). Para comprobar que tenemos instalado Rust ejecutamos el siguiente comando (la version puede cambiar dependiendo la version más reciente en ese momento).
 
 ~~~
 $ rustc -V
 rustc 1.31.1 (b6c32da9b 2018-12-18)
 ~~~
+
+La instalación de Rust solo soporta compilación nativa, para poder tener soporte de "cross compilation" para procesadores con la arquitectura Cortex-M debemos agregar el target.
+
+* Cortex-M0, M0+, and M1 (ARMv6-M architecture): *
+~~~
+$ rustup target add thumbv6m-none-eabi
+~~~
+
+* Cortex-M3 (ARMv7-M architecture): *
+~~~
+$ rustup target add thumbv7m-none-eabi
+~~~
+
+* Cortex-M4 and M7 without hardware floating point (ARMv7E-M architecture): *
+~~~
+$ rustup target add thumbv7em-none-eabi
+~~~
+
+* Cortex-M4F and M7F with hardware floating point (ARMv7E-M architecture): *
+~~~
+$ rustup target add thumbv7em-none-eabihf
+~~~
+
 
