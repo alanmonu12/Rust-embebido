@@ -42,4 +42,29 @@ $ rustup target add thumbv7em-none-eabi
 $ rustup target add thumbv7em-none-eabihf
 ~~~
 
+## Preparación del proyecto
+
+Para trabajar con Rust en sistemas embebidos es necesario preparar el proyectos con cierta configuración especifica para el hardware que vamos a usar. Lo primero que debemos hacer es agregar un archivo de configuración, este nos servirá para indicarle a Cargo (Cargo es el manejador de paquetes de Rust) información importante de nuestro proyecto, como puede ser la arquitectura del procesador.
+
+Primero debemos crear un carpeta dentro de la raíz nuestro proyecto llamada ~~~ .cargo ~~~, esta carpeta funciona como "home" para Cargo, ahí se guardan distintos archivos que Cargo utilizará.
+
+~~~
+$ mkdir .cargo
+~~~
+
+Dentro de la carpeta ~~~.cargo~~~ debemos crear un archivo llamado ~~~config~~~, Cargo automáticamente buscará este archivo lo agregará a las configuraciones globales del proyecto. Para nuestro proyecto el archivo debe contener lo siguiente.
+
+~~~
+> tail .cargo/config
+[build]
+# Instruction set of Cortex-M4F (used in NUCLEO-STM32L476)
+target = "thumbv7em-none-eabihf"
+
+rustflags = [
+  # use the Tlink.x scrip from the cortex-m-rt crate
+  "-C", "link-arg=-Tlink.x",
+]
+~~~
+
+Con las primeras líneas le decimos a Rust la arquitectura del target, con las demás instrucciónes le decimos que usaremos el linker que viene por defecto (LLD). 
 
