@@ -8,6 +8,6 @@ El hardware que se utliza para realizar es una tarjeta de desarrollo NUCLEO-STM3
 
 * Nucleo Cortex-M4F (con unidad de punto flotante de precisión sencilla)
 * Frecuancia de reloj de hasta 80 MHz
-* 1 MB de Flash que empieza en la dirección 0x0800_0000 (Diidida en dos bancos de memoria)
-* 128 KiB de SRAM que empieza en la dirección 0x2000_0000 (Dividad en dos bancos de memoria)
+* 1 MB de Flash que empieza en la dirección 0x0800_0000 (Dividida en dos bancos de memoria)
+* 128 KiB de SRAM que empieza en la dirección 0x2000_0000 (Dividida en dos bancos de memoria)
 
