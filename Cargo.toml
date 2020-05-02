@@ -4,6 +4,26 @@ version = "0.1.0"
 authors = ["Alan Rodriguez <alan.9489@gmail.com>"]
 edition = "2018"
 
+[profile.release]
+# optimize for size ('z' would optimize even more)
+opt-level = 's'
+# link with link time optimization (lto).
+lto = true
+# enable debugging in release mode.
+debug = true
+
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+# Nos da rutinas básicas de inicio para CPU ARM
+cortex-m-rt = "0.6.7"
+# Nos da acceso a registros propios de la arquitectura Cortex-M
+cortex-m = "0.5.8"
+# Contiene la rutina manejar "panic-halt" cuando tenemos errores
+panic-halt = "0.2.0"
+
+# Libreria que nos da funciones para tener acceso a los registros propios de 
+# familia de MCU que estemos usando
+[dependencies.stm32l4]
+version = "0.10.0"
+features = ["stm32l4x6", "rt"]
