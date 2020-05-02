@@ -11,3 +11,12 @@ El hardware que se utliza para realizar es una tarjeta de desarrollo NUCLEO-STM3
 * 1 MB de Flash que empieza en la dirección 0x0800_0000 (Dividida en dos bancos de memoria)
 * 128 KiB de SRAM que empieza en la dirección 0x2000_0000 (Dividida en dos bancos de memoria)
 
+## Instalación de Rust
+
+La mejor manera para instalar Rust es la descrita en su página oficial [https://rustup.rs](https://rustup.rs). Para comprobar que tenemos instalado Rust ejecutamos el siguiente comando.
+
+~~~
+$ rustc -V
+rustc 1.31.1 (b6c32da9b 2018-12-18)
+~~~
+
