@@ -411,7 +411,7 @@ Para continuar con la ejecución del programa escribimos en la sesión de GDB el
 (gdb) continue
 ~~~
 
-Con esto el LED de la placa comenzará a parpadear.
+Con esto el LED de la placa comenzará a parpadear. Con este proyecto base se pueden realizar distintas pruebas, integrando otras dependencias que nos permitan el uso de otros perifericos de MCU.
 
 ## License
 MIT
