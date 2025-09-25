@@ -1,28 +1,37 @@
-# Rust para embebidos
+# 🚀 Rust para Sistemas Embebidos: ¡Blink Start!
 
-Este proyecto debe servir como material de consulta para la creación de proyectos en Rust para sistemas embebidos.  Este primer proyecto tiene como objetivo mostrar las configuraciones básicas que se necesitan para un proyecto, la funcionalidad será solo la de hacer parpadear el LED integrado en el hardware de pruebas.
+Este proyecto sirve como una guía práctica y material de consulta para iniciar el desarrollo de firmware con Rust en sistemas embebidos. El objetivo de este primer ejemplo es establecer la configuración básica necesaria para cualquier proyecto en esta plataforma, culminando con la clásica funcionalidad de hacer parpadear el LED integrado del hardware de prueba.
 
-Posteriormente se harán más ejemplos con distintos periféricos y se tratará que sean lo más explicativos posibles.
+👉 Lo que aprenderás:
 
-- [Hardware de prueba](#hardware-de-prueba)
-- [Instalación de Rust](#instalación-de-rust)
-- [Preparación del proyecto](#preparación-del-proyecto)
-	- [Crear un proyecto en Rust](#crear-un-proyecto-en-rust)
-	- [Configuración global](#configuración-global)
-	- [Linker script](#linker-script)
-	- [Dependencias](#dependencias)
-	- [Perfil para compilar el proyecto](#perfil-para-compilar-el-proyecto)
-- [Aplicación](#aplicación)
-	- [Código](#codigo)
-	- [Compilar el proyecto](#compilar-el-proyecto)
-	- [Debugging](#debugging)
-	- [Openocd](#openocd)
-	- [arm-none-gdb](#arm-none-gdb)
-- [License](#license)
+    ⚙️ Configuración del toolchain de Rust para cross-compilation.
 
-## Hardware de prueba
+    🏗️ Estructura y configuración esencial de un proyecto con Cargo.
 
-El hardware que se utiliza para realizar es una tarjeta de desarrollo NUCLEO-STM32L476, la cual cuneta con un microcontrolador STM32L476RG con las siguientes características:
+    💡 Implementación del Blinky utilizando los registros Peripheral Access Crate (PAC).
+
+    🐞 Configuración de Debugging con OpenOCD y GDB.
+
+- [🚀 Rust para Sistemas Embebidos: ¡Blink Start!](#-rust-para-sistemas-embebidos-blink-start)
+  - [🛠️ Hardware de Prueba](#️-hardware-de-prueba)
+  - [⚙️ Instalación y Configuración del Toolchain de Rust](#️-instalación-y-configuración-del-toolchain-de-rust)
+  - [Preparación del proyecto](#preparación-del-proyecto)
+    - [Crear un proyecto en Rust](#crear-un-proyecto-en-rust)
+    - [Configuración global](#configuración-global)
+    - [Linker script](#linker-script)
+    - [Dependencias](#dependencias)
+    - [Perfil para compilar el proyecto](#perfil-para-compilar-el-proyecto)
+  - [Aplicación](#aplicación)
+    - [Codigo](#codigo)
+    - [Compilar el proyecto](#compilar-el-proyecto)
+    - [Debugging](#debugging)
+      - [Openocd](#openocd)
+      - [arm-none-gdb](#arm-none-gdb)
+  - [License](#license)
+
+## 🛠️ Hardware de Prueba
+
+Utilizaremos la tarjeta de desarrollo NUCLEO-STM32L476RG, que incorpora un microcontrolador STM32L476RG.
 
 * Núcleo Cortex-M4F (con unidad de punto flotante de precisión sencilla)
 * Frecuencia de reloj de hasta 80 MHz
@@ -31,35 +40,39 @@ El hardware que se utiliza para realizar es una tarjeta de desarrollo NUCLEO-STM
 
 ![Tarjeta de desarrollo](https://media.digikey.com/Photos/STMicro%20Photos/NUCLEO-L476RG.JPG)
 
-## Instalación de Rust
+## ⚙️ Instalación y Configuración del Toolchain de Rust
 
-La mejor manera para instalar Rust es la descrita en su página oficial [https://rustup.rs](https://rustup.rs). Para comprobar que tenemos instalado Rust ejecutamos el siguiente comando (la versión puede cambiar dependiendo la versión más reciente en ese momento).
+La forma recomendada para instalar Rust es a través de rustup.
+
+    1. Instalar Rust: Sigue las instrucciones en el sitio oficial: https://rustup.rs.
+
+    2. Verificar Instalación:
 
 ~~~ j
-$ rustc -V
-rustc 1.31.1 (b6c32da9b 2018-12-18)
+rustc -V
+# La versión puede variar, ej: rustc 1.89.0 (etc.)
 ~~~
 
-La instalación de Rust solo soporta compilación nativa, para poder tener soporte de "cross compilation" para procesadores con la arquitectura Cortex-M debemos agregar el target.
+    3. La instalación de Rust solo soporta compilación nativa, para poder tener soporte de "cross compilation" para procesadores con la arquitectura Cortex-M debemos agregar el target.
 
 Cortex-M0, M0+, and M1 (ARMv6-M architecture):
 ~~~ j
-$ rustup target add thumbv6m-none-eabi
+rustup target add thumbv6m-none-eabi
 ~~~
 
 Cortex-M3 (ARMv7-M architecture):
 ~~~ j
-$ rustup target add thumbv7m-none-eabi
+rustup target add thumbv7m-none-eabi
 ~~~
 
 Cortex-M4 and M7 without hardware floating point (ARMv7E-M architecture):
 ~~~ j
-$ rustup target add thumbv7em-none-eabi
+rustup target add thumbv7em-none-eabi
 ~~~
 
 Cortex-M4F and M7F with hardware floating point (ARMv7E-M architecture):
 ~~~ j
-$ rustup target add thumbv7em-none-eabihf
+rustup target add thumbv7em-none-eabihf
 ~~~
 
 ## Preparación del proyecto
@@ -71,7 +84,7 @@ Para trabajar con Rust en sistemas embebidos es necesario preparar el proyectos 
 Junto con la intalación de Rust, tendremos instalado Cargo que es el manejador de paquetes de Rust. Con ayuda de Cargo podemos generar protectos nuevos de rust. Para crear un proyecto debemos ejecutar el siguiente comando.
 
 ~~~ C
-$ cargo new <project_name>
+cargo new <project_name>
 ~~~
 
 Este comando generá una caperta con todos los archivos necesarios para un proyecto de Rust.
@@ -88,13 +101,13 @@ new-project
 Primero debemos crear un carpeta dentro de la raíz nuestro proyecto llamada **.cargo**, esta carpeta funciona como "home" para Cargo, ahí se guardan distintos archivos que Cargo utilizará.
 
 ~~~ j
-$ mkdir .cargo
+mkdir .cargo
 ~~~
 
-Dentro de la carpeta **_.cargo_** debemos crear un archivo llamado **_config_**, Cargo automáticamente buscará este archivo lo agregará a las configuraciones globales del proyecto. Para nuestro proyecto el archivo debe contener lo siguiente.
+Dentro de la carpeta **_.cargo_** debemos crear un archivo llamado **_config.toml_**, Cargo automáticamente buscará este archivo lo agregará a las configuraciones globales del proyecto. Para nuestro proyecto el archivo debe contener lo siguiente.
 
 ~~~ C
-$ tail .cargo/config
+tail .cargo/config
 [build]
 # Instruction set of Cortex-M4F (used in NUCLEO-STM32L476)
 target = "thumbv7em-none-eabihf"
@@ -139,19 +152,21 @@ Cuando creamos un proyecto con Cargo se generan una sería de archivos por defec
 ~~~
 
 Para cada proyecto las dependencias serán distintas, dependiendo del propósito del proyecto, para nuestro primer ejemplo debemos agregar las siguientes dependencias en el archivo Cargo.toml.
+
 ~~~ C
 [dependencies]
 # Nos da rutinas básicas de inicio para CPU ARM
-cortex-m-rt = "0.6.7"
+cortex-m-rt = "0.7.5"
 # Nos da acceso a registros propios de la arquitectura Cortex-M
-cortex-m = "0.5.8"
+cortex-m = { version = "0.7.7", features = ["critical-section-single-core"] }
 # Contiene la rutina manejar "panic-halt" cuando tenemos errores
 panic-halt = "0.2.0"
-# Libreria que nos da funciones para tener acceso a los registros propios de
-# familia de MCU que estemos usando
-[dependencies.stm32l4]
-version = "0.10.0"
-features = ["stm32l4x6", "rt"]
+
+cortex-m-semihosting = "0.3.5"
+
+panic-semihosting = "0.5.3"
+stm32l4xx-hal = { version = "0.7.1", features = ["stm32l476", "rt"] }
+rtt-target = "0.6.1"
 ~~~
 
 ### Perfil para compilar el proyecto
@@ -248,39 +263,81 @@ El programa base es el siguiente.
 ~~~ Rust
 #![no_std]
 #![no_main]
+
 // pick a panicking behavior
-extern crate panic_halt; // you can put a breakpoint on `rust_begin_unwind` to c    atch panics
+use panic_halt as _;
+
 extern crate cortex_m_rt;
 extern crate cortex_m;
-extern crate stm32l4;
 
-use cortex_m_semihosting::hprintln;
-use cortex_m_rt::entry;
-use stm32l4::stm32l4x6;
+use cortex_m_rt::{entry, exception, ExceptionFrame};
+
+use stm32l4xx_hal::{
+    delay::Delay, pac, prelude::*,
+};
+
+// use core::fmt;
+
+// use fmt::Write as FmtWrite;
+
+use rtt_target::{rprintln, rtt_init_print};
 
 #[entry]
 fn main() -> ! {
-    let peripherals = stm32l4x6::Peripherals::take().unwrap();
-    let gpioa = &peripherals.GPIOA;
-    let rcc = &peripherals.RCC;
-    hprintln!("Perifericos creados").unwrap();
-    
-    // Se debe habilitar el reloj para el GPIOA
-    rcc.ahb2enr.write(|w| w.gpioaen().set_bit());
-    
-    // Se configura el periferico para funcionar como salida
-    gpioa.moder.write(|w| w.moder5().bits(0b01));
-    gpioa.otyper.write(|w| w.ot5().bit(false));
-    gpioa.ospeedr.write(|w| w.ospeedr5().bits(0b00));
-    gpioa.pupdr.write(|w| unsafe{w.pupdr5().bits(0b00)});
-    hprintln!("Se configuro el pin 5 del puerto A").unwrap();
-    
+    rtt_init_print!();
+    rprintln!("Initializing...");
+
+    // Peripherals
+    let dp = pac::Peripherals::take().unwrap();
+    let cp = cortex_m::Peripherals::take().unwrap();
+
+    let mut flash = dp.FLASH.constrain();
+    let mut rcc = dp.RCC.constrain();
+    let mut pwr = dp.PWR.constrain(&mut rcc.apb1r1);
+
+    let clocks = rcc.cfgr
+        .sysclk(80.MHz())
+        .pclk1(80.MHz())
+        .hclk(80.MHz())
+        .pclk2(80.MHz())
+        .freeze(&mut flash.acr, &mut pwr);
+
+        // Delay (se necesita para calibración del ADC)
+    let mut delay = Delay::new(cp.SYST, clocks);
+
+    let mut gpioa = dp.GPIOA.split(&mut rcc.ahb2);
+
+    let mut led = gpioa.pa5.into_push_pull_output(&mut gpioa.moder, &mut gpioa.otyper);
+
+    rprintln!("Perifericos creados.");
+
     loop {
-       gpioa.bsrr.write(|w| w.bs5().set_bit());
-       cortex_m::asm::delay(2000000);
-       gpioa.bsrr.write(|w| w.br5().set_bit());
-       cortex_m::asm::delay(2000000);
+        led.set_high();
+        delay.delay_ms(500u32);
+        led.set_low();
+        delay.delay_ms(500u32);
     }
+}
+
+#[exception]
+fn SysTick() {
+    
+}
+
+#[exception]
+unsafe fn HardFault(ef: &ExceptionFrame) -> ! {
+    use cortex_m::peripheral::SCB;
+
+    rprintln!("💥 HARD FAULT!");
+    rprintln!("PC  = {:#010X}", ef.pc());
+    rprintln!("LR  = {:#010X}", ef.lr());
+    rprintln!("xPSR= {:#010X}", ef.xpsr());
+
+    // Leer el registro HFSR para ver qué causó el HardFault
+    let scb = unsafe { &*SCB::PTR };
+    rprintln!("HFSR= {:#010X}", scb.hfsr.read());
+
+    loop {}
 }
 ~~~
 
@@ -288,7 +345,7 @@ fn main() -> ! {
 
 Para compilar el proyecto solo es necesario ejecutar el siguiente comando.
 ~~~ Rust
-> cargo build --release
+cargo build
 ~~~
 
 ### Debugging
@@ -369,7 +426,7 @@ La última configuración que debemos hacer para poder empezar a probar el progr
 ~~~ C
 [target.'cfg(all(target_arch = "arm", target_os = "none"))']
 #uncomment ONE of these three option to make `cargo run` start a GDB session
-runner = "arm-eabi-gdb -x openocd.gdb"
+runner = "gdb-multiarch -x openocd.gdb"
  ~~~
 
 Para iniciar una sesión de debugging solo es necesario ejecutar los siguiente comando.
